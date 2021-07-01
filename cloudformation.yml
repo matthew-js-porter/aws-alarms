@@ -1,6 +1,6 @@
 AWSTemplateFormatVersion: 2010-09-09
 Resources:
-  AltertTopic:
+  AlertTopic:
     Type: 'AWS::SNS::Topic'
     Properties:
       DisplayName: AWS Alerts
@@ -10,6 +10,21 @@ Resources:
           Protocol: 'email'
         - Endpoint: { "Ref" : "SMSParameter" }
           Protocol: 'SMS'
+  BillingAlarm:
+    Type: AWS::CloudWatch::Alarm
+    Properties:
+      AlarmDescription: "Alert if Estimated Charges surpass threshold"
+      Namespace: AWS/Billing
+      MetricName: EstimatedCharges
+      Dimensions:
+        - Name: Currency
+          Value: USD
+      Statistic: Maximum
+      Period: 21600
+      EvaluationPeriods: 1
+      Threshold: 5
+      ComparisonOperator: GreaterThanThreshold
+      AlarmActions: [ !Ref AlertTopic ]
 Parameters:
   EmailParameter:
     Type: String
