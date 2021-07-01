@@ -1,0 +1,21 @@
+AWSTemplateFormatVersion: 2010-09-09
+Resources:
+  AltertTopic:
+    Type: 'AWS::SNS::Topic'
+    Properties:
+      DisplayName: AWS Alerts
+      TopicName: alerts
+      Subscription:
+        - Endpoint: { "Ref" : "EmailParameter" }
+          Protocol: 'email'
+        - Endpoint: { "Ref" : "SMSParameter" }
+          Protocol: 'SMS'
+Parameters:
+  EmailParameter:
+    Type: String
+    Default: no-reply@aws.com
+    Description: The email address to subscribe to alerts
+  SMSParameter:
+    Type: String
+    Default: +1
+    Description: The phone number to get sms alerts
