@@ -39,3 +39,6 @@ Outputs:
   SNSTopic:
     Description: SNS Topic for Alerts
     Value: !Ref AlertTopic
+    Export:
+      Name:
+        Fn::Sub: "${AWS::StackName}-SNSTopic"
