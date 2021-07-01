@@ -34,3 +34,8 @@ Parameters:
     Type: String
     Default: +1
     Description: The phone number to get sms alerts
+
+Outputs:
+  SNSTopic:
+    Description: SNS Topic for Alerts
+    Value: !Ref AlertTopic
